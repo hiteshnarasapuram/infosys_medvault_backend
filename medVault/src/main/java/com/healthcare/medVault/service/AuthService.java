@@ -49,6 +49,7 @@ public class AuthService {
         }
 
         String otp = String.valueOf(100000 + new Random().nextInt(900000)); // 6-digit OTP
+//        String otp = String.valueOf(new Random().nextInt(100000,999999));
         otpStorage.put(email, otp);
 
 

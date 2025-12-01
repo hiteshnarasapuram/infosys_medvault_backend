@@ -81,7 +81,7 @@ public class PatientController {
     @PostMapping("/set-password")
     public ResponseEntity<?> setPassword(HttpServletRequest request, @RequestBody Map<String, String> body) {
         try {
-            patientService.setPassword(request, body.get("password"));
+            patientService.setPassword(request, body.get("newPassword"));
             return ResponseEntity.ok(Map.of("message", "Password set successfully! Please login again."));
         } catch (IllegalStateException e) {
             return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
@@ -106,18 +106,33 @@ public class PatientController {
     }
 
 
-    @PostMapping("/book-appointment")
-    public ResponseEntity<?> bookAppointment(HttpServletRequest request,
-                                             @RequestParam Long slotId,
-                                             @RequestParam String reason) {
+//    @PostMapping("/book-appointment")
+//    public ResponseEntity<?> bookAppointment(HttpServletRequest request,
+//                                             @RequestParam Long slotId,
+//                                             @RequestParam String reason) {
+//        try {
+//            String message = patientService.bookAppointment(request, slotId, reason);
+//            return ResponseEntity.ok(Map.of("message", message));
+//
+//        } catch (RuntimeException e) {
+//            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
+//        }
+//    }
+
+    @PostMapping("/book-appointment/{slotId}")
+    public ResponseEntity<?> bookAppointment(
+            HttpServletRequest request,
+            @PathVariable Long slotId,
+            @RequestParam String reason) {
+
         try {
             String message = patientService.bookAppointment(request, slotId, reason);
             return ResponseEntity.ok(Map.of("message", message));
-
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
         }
     }
+
 
 
     @GetMapping("/appointments")

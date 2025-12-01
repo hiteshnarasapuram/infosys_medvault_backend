@@ -190,7 +190,7 @@ public class PatientServiceImpl implements PatientService {
 
 
     @Override
-    public void setPassword(HttpServletRequest request, String newPassword) {
+    public void setPassword(HttpServletRequest request, String password) {
 
         String email = request.getUserPrincipal().getName();
         User user = userRepo.findByEmailIgnoreCase(email);
@@ -203,7 +203,7 @@ public class PatientServiceImpl implements PatientService {
             throw new IllegalStateException("Password already set.");
         }
 
-        user.setPassword(newPassword);
+        user.setPassword(password);
         user.setFirstLogin(false);
 
         userRepo.save(user);
